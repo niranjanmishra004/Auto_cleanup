@@ -21,7 +21,8 @@
 
   <h2>📸 Sample Output</h2>
   <pre>
-    <img width="1019" height="444" alt="image" src="https://github.com/user-attachments/assets/9747aa0a-bc36-4b53-b2da-caf2dba8bcd4" />
+    <img width="819" height="493" alt="image" src="https://github.com/user-attachments/assets/296ec069-79ce-40f2-856b-31e8f64c59c2" />
+
   </pre>
 
   -------------------------------------------------------------------------------------------------
