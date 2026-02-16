@@ -40,22 +40,22 @@
 <h4>1. Clone the repository</h4>
 
 ```
-git clone https://github.com/niranjanmishra004/System-status.git
+git clone https://github.com/niranjanmishra004/Auto_cleanup.git
 ```
 <h4>2.Navigate into the directory</h4>
 
 ```
-cd System-status
+cd Auto_cleanup
 ```
 
 <h4>3.Make the script executable</h4>
   
 ```
-chmod +x system_status.sh
+chmod +x auto_cleanup.sh
 ```
 
 <h4>4.Run the script</h4>
 
 ```
-./system_status.sh
+./auto_cleanup.sh
 ```
