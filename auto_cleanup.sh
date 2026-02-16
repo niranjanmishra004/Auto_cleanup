@@ -22,6 +22,10 @@ get_free_space_kb() {
     df --output=avail / | tail -1 | tr -d ' '
 }
 
+kb_to_gb() {
+    awk "BEGIN {printf \"%.1f\", $1/1024/1024}"
+}
+
 cleanup_apt() {
     echo -e "${YELLOW}Cleaning APT cache...${RESET}"
     sudo apt clean -y
@@ -45,35 +49,33 @@ cleanup_thumbnails() {
     fi
 }
 
-calculate_freed_space() {
-    local before=$1
-    local after=$2
-    local diff=$((after - before))
-    echo $((diff / 1024))
-}
-
 main() {
     print_header
 
-    echo -e "${CYAN}Measuring disk space before cleanup...${RESET}"
-    before_space=$(get_free_space_kb)
+    before_kb=$(get_free_space_kb)
+    before_gb=$(kb_to_gb "$before_kb")
 
+    echo -e "${CYAN}Free space before cleanup: ${YELLOW}${before_gb} GB${RESET}"
     echo
+
     cleanup_apt
     cleanup_tmp
     cleanup_journal
     cleanup_thumbnails
     echo
 
-    echo -e "${CYAN}Measuring disk space after cleanup...${RESET}"
-    after_space=$(get_free_space_kb)
+    after_kb=$(get_free_space_kb)
+    after_gb=$(kb_to_gb "$after_kb")
 
-    freed_mb=$(calculate_freed_space "$before_space" "$after_space")
+    freed_kb=$((after_kb - before_kb))
+    freed_gb=$(kb_to_gb "$freed_kb")
 
-    echo
     echo -e "${MAGENTA}======================================${RESET}"
     echo -e "${GREEN}✅ Cleanup Completed Successfully!${RESET}"
-    echo -e "${CYAN}🧹 Space Freed: ${YELLOW}${freed_mb} MB${RESET}"
+    echo
+    echo -e "${CYAN}Before: ${YELLOW}${before_gb} GB free${RESET}"
+    echo -e "${CYAN}After : ${YELLOW}${after_gb} GB free${RESET}"
+    echo -e "${CYAN}Freed : ${GREEN}${freed_gb} GB${RESET}"
     echo -e "${MAGENTA}======================================${RESET}"
 }
 
